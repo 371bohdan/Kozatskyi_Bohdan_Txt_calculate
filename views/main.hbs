@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload File</title>
+  <style>
+    .custom-upload {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    #fileInput {
+        display: none; /* Приховуємо стандартний input */
+    }
+  </style>
+</head>
+<body>
+  <h1>Upload File</h1>
+  <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
+    <label for="fileInput" class="custom-upload">Choose file</label>
+    <input type="file" name="file" id="fileInput" onchange="displayFileName(this)">
+    <button type="button" onclick="checkFileType()">Upload</button>
+     <span id="fileNameDisplay"></span>
+    <div id="errorMessage" style="color: red;"></div>
+  </form>
+  <div id="result"></div>
+
+  
+  <script src="script.js"></script>
+   <script>
+    function checkFileType() {
+      const fileInput = document.getElementById('fileInput');
+      const file = fileInput.files[0];
+      const errorMessage = document.getElementById('errorMessage');
+      const fileNameDisplay = document.getElementById('fileNameDisplay');
+      if (!file) {
+        errorMessage.textContent = 'Please select a file.';
+        return setTimeout(() => {
+          errorMessage.textContent = ''; 
+        }, 3000);
+      }
+      const fileName = file.name;
+      const fileExtension = fileName.split('.').pop();
+      if (fileExtension !== 'txt') {
+        errorMessage.textContent = 'Invalid file format. Please upload a text file (.txt).';
+        return setTimeout(() => {
+          errorMessage.textContent = '';
+        }, 3000);
+      }
+      errorMessage.textContent = ''; 
+      fileNameDisplay.textContent = `Selected file: ${fileName}`;
+      document.getElementById('uploadForm').submit();
+    }
+     function displayFileName(input) {
+      const fileNameDisplay = document.getElementById('fileNameDisplay');
+      fileNameDisplay.textContent = input.files[0].name;
+    }
+  </script>
+</body>
+</html>
