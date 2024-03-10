@@ -61,7 +61,7 @@ const increase_sequence = (data) => {
   let result = [];
   for(let i=0; i<data.length; i++){
     count_increase_sequnce.push(data[i])
-    if(data[i] > data[i+1]){
+    if(data[i] > data[i+1] || i === data.length-1){
       total_increase_sequence.push(count_increase_sequnce);
       count_increase_sequnce = [];
     }
@@ -81,7 +81,7 @@ const decrease_sequence = (data) => {
   let result = [];
   for(let i=0; i<data.length; i++){
     count_deacrease_sequnce.push(data[i])
-    if(data[i] < data[i+1]){
+    if(data[i] < data[i+1] || i === data.length-1){
       total_deacrease_sequence.push(count_deacrease_sequnce);
       count_deacrease_sequnce = [];
     }
